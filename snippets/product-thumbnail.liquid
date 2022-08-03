@@ -23,7 +23,7 @@
 <noscript>
   {%- if media.media_type == 'video' or media.media_type == 'external_video' -%}
     <span class="product__media-icon motion-reduce quick-add-hidden">{% render 'icon-play' %}</span>
-    <div class="product__media media gradient global-media-settings">
+    <div class="product__media media gradient global-media-settings" {% if aspect_ratio == 'original' %}style="padding-top: {{ 1 | divided_by: media.preview_image.aspect_ratio | times: 100 }}%;"{% endif %}>
       <img
         srcset="{% if media.preview_image.width >= 493 %}{{ media.preview_image | image_url: width: 493 }} 493w,{% endif %}
           {% if media.preview_image.width >= 600 %}{{ media.preview_image | image_url: width: 600 }} 600w,{% endif %}
@@ -49,7 +49,7 @@
       <span class="visually-hidden">{{ 'products.product.video_exit_message' | t: title: product.title | escape }}</span>
     </a>
   {%- else -%}
-    <div class="product__media media gradient global-media-settings">
+    <div class="product__media media gradient global-media-settings" style="padding-top: {{ 1 | divided_by: media.preview_image.aspect_ratio | times: 100 }}%;">
       <img
         srcset="{% if media.preview_image.width >= 493 %}{{ media.preview_image | image_url: width: 493 }} 493w,{% endif %}
           {% if media.preview_image.width >= 600 %}{{ media.preview_image | image_url: width: 600 }} 600w,{% endif %}
@@ -88,7 +88,7 @@
     -%}
   </span>
 
-  <div class="product__media media media--transparent gradient global-media-settings">
+  <div class="product__media media media--{{ aspect_ratio }} gradient global-media-settings" {% if aspect_ratio == 'original' %}style="padding-top: {{ 1 | divided_by: media.preview_image.aspect_ratio | times: 100 }}%;"{% endif %}>
     <img
       srcset="{% if media.preview_image.width >= 493 %}{{ media.preview_image | image_url: width: 493 }} 493w,{% endif %}
         {% if media.preview_image.width >= 600 %}{{ media.preview_image | image_url: width: 600 }} 600w,{% endif %}
@@ -119,7 +119,7 @@
 
 {%- if media.media_type != 'image' -%}
   {%- if media.media_type == 'model' -%}
-    <product-model class="deferred-media media media--transparent gradient global-media-settings no-js-hidden" style="padding-top: 100%" data-media-id="{{ media.id }}">
+    <product-model class="deferred-media media media--{{ aspect_ratio }} gradient global-media-settings no-js-hidden" style="padding-top: 100%" data-media-id="{{ media.id }}">
   {%- else -%}
     <deferred-media class="deferred-media gradient global-media-settings media no-js-hidden" style="padding-top: {{ 1 | divided_by: media.aspect_ratio | times: 100 }}%" data-media-id="{{ media.id }}">
   {%- endif -%}
