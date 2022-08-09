@@ -28,7 +28,7 @@
 
   <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
 
-  {%- assign first_3d_model = product.media | where: "media_type", "model" | first -%}
+  {%- assign first_3d_model = product.media | where: 'media_type', 'model' | first -%}
   {%- if first_3d_model -%}
     {{ 'component-product-model.css' | asset_url | stylesheet_tag }}
     <link id="ModelViewerStyle" rel="stylesheet" href="https://cdn.shopify.com/shopifycloud/model-viewer-ui/assets/v1.0/model-viewer-ui.css" media="print" onload="this.media='all'">
@@ -79,7 +79,15 @@
                 data-media-id="{{ section.id }}-{{ featured_media.id }}"
               >
                 {%- assign media_position = 1 -%}
-                {% render 'product-thumbnail', media: featured_media, position: media_position, loop: section.settings.enable_video_looping, modal_id: section.id, xr_button: true, media_width: media_width, lazy_load: false %}
+                {% render 'product-thumbnail',
+                  media: featured_media,
+                  position: media_position,
+                  loop: section.settings.enable_video_looping,
+                  modal_id: section.id,
+                  xr_button: true,
+                  media_width: media_width,
+                  lazy_load: false
+                %}
               </li>
             {%- endif -%}
             {%- for media in product.media -%}
@@ -90,7 +98,15 @@
                   data-media-id="{{ section.id }}-{{ media.id }}"
                 >
                   {%- assign media_position = media_position | default: 0 | plus: 1 -%}
-                  {% render 'product-thumbnail', media: media, position: media_position, loop: section.settings.enable_video_looping, modal_id: section.id, xr_button: true, media_width: media_width, lazy_load: true %}
+                  {% render 'product-thumbnail',
+                    media: media,
+                    position: media_position,
+                    loop: section.settings.enable_video_looping,
+                    modal_id: section.id,
+                    xr_button: true,
+                    media_width: media_width,
+                    lazy_load: true
+                  %}
                 </li>
               {%- endunless -%}
             {%- endfor -%}
@@ -304,7 +320,12 @@
               </div>
             {%- when 'price' -%}
               <div class="no-js-hidden" id="price-{{ section.id }}" role="status" {{ block.shopify_attributes }}>
-                {%- render 'price', product: product, use_variant: true, show_badges: true, price_class: 'price--large' -%}
+                {%- render 'price',
+                  product: product,
+                  use_variant: true,
+                  show_badges: true,
+                  price_class: 'price--large'
+                -%}
               </div>
               {%- if shop.taxes_included or shop.shipping_policy.body != blank -%}
                 <div class="product__tax caption rte">
@@ -613,7 +634,9 @@
 
                 {{ 'component-pickup-availability.css' | asset_url | stylesheet_tag }}
 
-                {%- assign pick_up_availabilities = product.selected_or_first_available_variant.store_availabilities | where: 'pick_up_enabled', true -%}
+                {%- assign pick_up_availabilities = product.selected_or_first_available_variant.store_availabilities
+                  | where: 'pick_up_enabled', true
+                -%}
 
                 <pickup-availability
                   class="product__pickup-availabilities no-js-hidden quick-add-hidden"
@@ -732,7 +755,7 @@
     </div>
   </product-modal>
 
-  {% assign popups = section.blocks | where: "type", "popup" %}
+  {% assign popups = section.blocks | where: 'type', 'popup' %}
   {%- for block in popups -%}
     <modal-dialog id="PopupModal-{{ block.id }}" class="product-popup-modal" {{ block.shopify_attributes }}>
       <div
